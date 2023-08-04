@@ -1,0 +1,124 @@
+<MainWindow>:
+    name: "Main"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Сведения студентов из ФРДО"
+            anchor_title: "left"
+            md_bg_color: "#0e4c89"
+            specific_text_color: "white"
+        MDBoxLayout:
+            orientation: "horizontal"
+            padding: [20, 0, 20, 0]
+            MDLabel:
+                id: first_file
+                text: "Выберите файл 'Выгрузка ФРДО' (--'год'.xlsx)"
+            MDLabel:
+                id: file1
+                text: ""
+            MDRectangleFlatIconButton:
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                icon: "file"
+                text: "Выбрать файл"
+                theme_text_color: "Custom"
+                text_color: "white"
+                line_color: "#0e4c89"
+                theme_icon_color: "Custom"
+                icon_color: "#0e4c89"
+                on_release: root.open_file_1()
+        MDBoxLayout:
+            orientation: "horizontal"
+            padding: [20, 0, 20, 0]
+            MDLabel:
+                id: second_file
+                text: "Выберте файл 'Оценки'"
+            MDLabel:
+                id: file2
+                text: ""
+            MDRectangleFlatIconButton:
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                icon: "file"
+                text: "Выбрать файл"
+                theme_text_color: "Custom"
+                text_color: "white"
+                line_color: "#0e4c89"
+                theme_icon_color: "Custom"
+                icon_color: "#0e4c89"
+                on_release: root.open_file_2()
+        Button:
+            size_hint_y: None
+            height: '120dp'
+            text: "Сформировать документ"
+            on_press:
+                root.ParcerLoad()
+
+
+<LoadWindow>:
+    name: "Load"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Сведения студентов из ФРДО"
+            anchor_title: "left"
+            md_bg_color: "#0e4c89"
+            specific_text_color: "white"
+        MDBoxLayout:
+            orientation: "vertical"
+            MDLabel:
+                text: ""
+            MDSpinner:
+                size_hint: None, None
+                line_width: 5
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                size: dp(146), dp(146)
+                active: True
+            MDLabel:
+                id: status
+                halign: "center"
+                size_hint: None, None
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                text: "Подождите..."
+            MDLabel:
+                text: ""
+
+
+<ResultFrdoWindow>:
+    name: "Result"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Сведения студентов из ФРДО"
+            anchor_title: "left"
+            md_bg_color: "#0e4c89"
+            specific_text_color: "white"
+        MDBoxLayout:
+            orientation: "vertical"
+            MDLabel:
+                halign: "center"
+                size_hint: .6, .6
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                text: "Файл успешно создан!!!"
+            MDLabel:
+                size_hint: .6, .6
+                halign: "center"
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                text: "Файл сохранен под названием '' "
+            MDLabel:
+                halign: "center"
+                size_hint: .6, .6
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                text: "Файл расположен в ''"
+            MDBoxLayout:
+                orientation: "horizontal"
+                Button:
+                    text: "Продолжить работу"
+                    size_hint_y: None
+                    height: '120dp'
+                    on_press:
+                        root.manager.transition.direction = 'right'
+                        root.manager.current = 'Main'
+                Button:
+                    text: "Зыкрыть приложение"
+                    size_hint_y: None
+                    height: '120dp'
+                    on_press: app.stop()
