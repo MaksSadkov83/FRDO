@@ -7,8 +7,8 @@ def ParcerXlsxData(file1, file2):
     wb_file1 = load_workbook(file1)
     wb_file2 = load_workbook(file2)
     # toast('Создаю новый файл')
-    # new_file = Workbook() TODO
-    # ws = new_file.active TODO
+    # new_file = Workbook()
+    # ws = new_file.active
     # toast('Извлекаю данные')
     FIO = []
     Subject = {}
@@ -16,7 +16,7 @@ def ParcerXlsxData(file1, file2):
     # toast('Заношу в файл')
     headers = []
     # toast('Сохраняю файл')
-    # new_file.save('Сведения студентов из ФРДО.xlsx') TODO
+    # new_file.save('Сведения студентов из ФРДО.xlsx')
 
 
 if __name__ == "__main__":
