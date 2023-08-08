@@ -45,6 +45,25 @@
                 theme_icon_color: "Custom"
                 icon_color: "#0e4c89"
                 on_release: root.open_file_2()
+        MDBoxLayout:
+            orientation: "horizontal"
+            padding: [20, 0, 20, 0]
+            MDLabel:
+                text: "Выберите специальность"
+            MDLabel:
+                id: spec
+                text: ""
+            MDRectangleFlatIconButton:
+                id: button
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                icon: "account-hard-hat"
+                text: "Выбрать специальность"
+                theme_text_color: "Custom"
+                text_color: "white"
+                line_color: "#0e4c89"
+                theme_icon_color: "Custom"
+                icon_color: "#0e4c89"
+                on_release: root.spec_select()
         Button:
             size_hint_y: None
             height: '120dp'
