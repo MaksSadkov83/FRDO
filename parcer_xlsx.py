@@ -2,7 +2,7 @@ import os.path
 
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import PatternFill, Border, Side
-from openpyxl.utils.cell import get_column_letter
+from openpyxl.utils.cell import get_column_letter, column_index_from_string
 from kivymd.toast import toast
 
 
@@ -19,10 +19,11 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
     ws = new_file.active
 
     # toast('Извлекаю данные')
+    # Парсинг файла с оценками
     FIO = {}
     Subject = []
     Subjetc_hour = []
-    data_student = []
+
     for row in range(6, ws_f2.max_row + 1):
         fio = ws_f2.cell(row=row, column=1).value
         eval = []
@@ -31,14 +32,44 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
         FIO[fio] = eval
 
     for column in range(4, ws_f2.max_column + 1):
-        if ws_f2.cell(row=5, column=column).value != "в том числе":
-            Subject.append(ws_f2.cell(row=5, column=column).value)
-            Subjetc_hour.append(ws_f2.cell(row=4, column=column).value)
+        Subject.append(ws_f2.cell(row=5, column=column).value)
+        Subjetc_hour.append(ws_f2.cell(row=4, column=column).value)
 
-    print(Subject)
-    print(Subjetc_hour)
-    print(FIO)
-
+    # парсинг файла с данными о студентах
+    data_student = []
+    for row in range(2, ws_f1.max_row + 1):
+        fio = \
+            f"{ws_f1.cell(row=row, column=column_index_from_string('S')).value} " \
+            f"{ws_f1.cell(row=row, column=column_index_from_string('T')).value} " \
+            f"{ws_f1.cell(row=row, column=column_index_from_string('U')).value}"
+        if fio in FIO.keys():
+            student = {
+                'surname': ws_f1.cell(row=row, column=column_index_from_string('S')).value,
+                'name': ws_f1.cell(row=row, column=column_index_from_string('T')).value,
+                'patronymic': ws_f1.cell(row=row, column=column_index_from_string('U')).value,
+                'year_references': ws_f1.cell(row=row, column=column_index_from_string('Q')).value,
+                'speciality_code': ws_f1.cell(row=row, column=column_index_from_string('L')).value,
+                'specialty': ws_f1.cell(row=row, column=column_index_from_string('M')).value,
+                'data_references': ws_f1.cell(row=row, column=column_index_from_string('J')).value,
+                'qualification': ws_f1.cell(row=row, column=column_index_from_string('N')).value,
+                'gender': list(ws_f1.cell(row=row, column=column_index_from_string('W')).value)[0],
+                'SNILS': ws_f1.cell(row=row, column=column_index_from_string('X')).value,
+                'on_EPGU': "Да",
+                'citizenship': "RU",
+                'on_blank': "Да",
+                'base_references': "",
+                'basis_acceptance': "",
+                'email': "",
+                'chair_gec': "",
+                'previous_document_education': f"Аттестат о среднем образовании, {ws_f1.cell(row=row, column=column_index_from_string('P')).value}",
+                'document_view': "",
+                'solution_gec': "",
+                'term_accumulation': f"{ws_f1.cell(row=row, column=column_index_from_string('R')).value} года",
+                'rektor': "Данилова Оксана Вячеславовна"
+            }
+            print(student)
+            data_student.append(student)
+            break
 
     # toast('Заношу в файл')
     # Высота строк
@@ -134,6 +165,21 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
         for cell in row:
             cell.fill = PatternFill('solid', fgColor='ffffcc')
             cell.border = Border(top=double, bottom=double, left=thins, right=thins)
+
+    # Занесение предметов в таблицу
+    sub = [j for j in Subject if (j != 'в том числе:' and 'аттестация' not in j
+                and 'экзамен' not in j and 'рактика' not in j and
+                'курсовая' not in j)]
+    theme_praktik = [j for j in Subject if ('рактика' in j and j != "Практика")]
+    name_kurs_job = [j for j in Subject if ('курсовая'in j)]
+
+    for i in range(0, len(sub)):
+        ws.cell(row=3, column=column_index_from_string('W') + i).value = sub[i]
+
+    for i in range(0, len(theme_praktik)):
+        ws.cell(row=4, column=column_index_from_string('CZ') + i).value = theme_praktik[i]
+
+    ws['DN3'].value = name_kurs_job[0]
 
     # toast('Сохраняю файл')
     path = os.path.join(f'C:\\Users\\{os.getlogin()}\\Documents\\Сведения студентов из ФРДО {spec}.xlsx')
