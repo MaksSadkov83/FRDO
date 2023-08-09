@@ -8,45 +8,55 @@ from kivymd.toast import toast
 
 def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx", spec="Информационные системы и программирование"):
 
-    # toast('Открываю файлы')
+    toast('Открываю файлы')
     wb_file1 = load_workbook(file1, read_only=True, data_only=True)
     wb_file2 = load_workbook(file2, read_only=True, data_only=True)
     ws_f1 = wb_file1.active
     ws_f2 = wb_file2.active
 
-    # toast('Создаю новый файл')
+    toast('Создаю новый файл')
     new_file = Workbook()
     ws = new_file.active
 
-    # toast('Извлекаю данные')
+    toast('Извлекаю данные')
     # Парсинг файла с оценками
     FIO = {}
     Subject = []
     Subjetc_hour = []
+
+    for column in range(4, ws_f2.max_column + 1):
+        Subject.append(ws_f2.cell(row=5, column=column).value)
+        Subjetc_hour.append(ws_f2.cell(row=4, column=column).value)
 
     for row in range(6, ws_f2.max_row + 1):
         fio = ws_f2.cell(row=row, column=1).value
         eval = []
         for column in range(4, ws_f2.max_column + 1):
             eval.append(ws_f2.cell(row=row, column=column).value)
+        eval.append(eval.pop(Subject.index('ВСЕГО часов теоретического обучения:')))
+        eval.append(eval.pop(Subject.index('в том числе аудиторных часов:')))
         FIO[fio] = eval
 
-    for column in range(4, ws_f2.max_column + 1):
-        Subject.append(ws_f2.cell(row=5, column=column).value)
-        Subjetc_hour.append(ws_f2.cell(row=4, column=column).value)
+    Subjetc_hour.append(Subjetc_hour.pop(Subject.index('ВСЕГО часов теоретического обучения:')))
+    Subjetc_hour.append(Subjetc_hour.pop(Subject.index('в том числе аудиторных часов:')))
+
+    Subject.append(Subject.pop(Subject.index('ВСЕГО часов теоретического обучения:')))
+    Subject.append(Subject.pop(Subject.index('в том числе аудиторных часов:')))
 
     # парсинг файла с данными о студентах
     data_student = []
     for row in range(2, ws_f1.max_row + 1):
-        fio = \
-            f"{ws_f1.cell(row=row, column=column_index_from_string('S')).value} " \
-            f"{ws_f1.cell(row=row, column=column_index_from_string('T')).value} " \
-            f"{ws_f1.cell(row=row, column=column_index_from_string('U')).value}"
+        if ws_f1.cell(row=row, column=column_index_from_string('S')).value is None:
+            break
+        fio = f"{ws_f1.cell(row=row, column=column_index_from_string('S')).value} " \
+              f"{ws_f1.cell(row=row, column=column_index_from_string('T')).value} " \
+              f"{ws_f1.cell(row=row, column=column_index_from_string('U')).value}"
         if fio in FIO.keys():
             student = {
                 'surname': ws_f1.cell(row=row, column=column_index_from_string('S')).value,
                 'name': ws_f1.cell(row=row, column=column_index_from_string('T')).value,
                 'patronymic': ws_f1.cell(row=row, column=column_index_from_string('U')).value,
+                'birthday': ws_f1.cell(row=row, column=column_index_from_string('V')).value,
                 'year_references': ws_f1.cell(row=row, column=column_index_from_string('Q')).value,
                 'speciality_code': ws_f1.cell(row=row, column=column_index_from_string('L')).value,
                 'specialty': ws_f1.cell(row=row, column=column_index_from_string('M')).value,
@@ -65,18 +75,17 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
                 'document_view': "",
                 'solution_gec': "",
                 'term_accumulation': f"{ws_f1.cell(row=row, column=column_index_from_string('R')).value} года",
-                'rektor': "Данилова Оксана Вячеславовна"
+                'mark': FIO[fio],
+                'rektor': "Данилова Оксана Вячеславовна",
             }
-            print(student)
             data_student.append(student)
-            break
 
-    # toast('Заношу в файл')
+    toast('Заношу в файл')
     # Высота строк
-    ws.row_dimensions[1].height = 30
-    ws.row_dimensions[2].height = 30
-    ws.row_dimensions[3].height = 30
-    ws.row_dimensions[4].height = 30
+    ws.row_dimensions[1].height = 50
+    ws.row_dimensions[2].height = 50
+    ws.row_dimensions[3].height = 50
+    ws.row_dimensions[4].height = 50
 
     # ЗАголовки таблицы
     headers = [["ФАМИЛИЯ", "ИМЯ",  "ОТЧЕСТВО",
@@ -121,6 +130,8 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
     INFO_5 = ws['DQ1:DQ2']
     INFO_6 = ws['CY3:DK4']
     INFO_7 = ws['DL3:DN4']
+    INFO_8 = ws['A3:DQ4']
+
     thins = Side(border_style="medium", color="211c16")
     double = Side(border_style="medium", color="211c16")
 
@@ -166,13 +177,35 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
             cell.fill = PatternFill('solid', fgColor='ffffcc')
             cell.border = Border(top=double, bottom=double, left=thins, right=thins)
 
-    # Занесение предметов в таблицу
+    for row in INFO_8:
+        for cell in row:
+            cell.border = Border(top=double, bottom=double, left=thins, right=thins)
+
+    # Фильтрация данных из массива Subject по предметам (sub), практикам (theme_praktik), курсовым работам (name_kurs_job)
     sub = [j for j in Subject if (j != 'в том числе:' and 'аттестация' not in j
                 and 'экзамен' not in j and 'рактика' not in j and
                 'курсовая' not in j)]
     theme_praktik = [j for j in Subject if ('рактика' in j and j != "Практика")]
+    theme_praktik.append(theme_praktik.pop(0))
     name_kurs_job = [j for j in Subject if ('курсовая'in j)]
 
+    # Извлечение индексов ищ массива Subject по предметам (sub), практикам (theme_praktik), курсовым работам (name_kurs_job)
+    sub_index = [j for j in range(0, len(Subject)) if (Subject[j] != 'в том числе:' and 'аттестация' not in Subject[j]
+                    and 'экзамен' not in Subject[j] and 'рактика' not in Subject[j] and
+                    'курсовая' not in Subject[j])]
+    sub_hour = [Subjetc_hour[j] for j in range(0, len(Subject)) if (Subject[j] != 'в том числе:' and 'аттестация' not in Subject[j]
+                    and 'экзамен' not in Subject[j] and 'рактика' not in Subject[j] and
+                    'курсовая' not in Subject[j])]
+
+    index_praktiks = [j for j in range(0, len(Subject)) if ('рактика' in Subject[j] and Subject[j] != "Практика")]
+    index_praktiks.append(index_praktiks.pop(0))
+
+    index_kurs_job = [j for j in range(0, len(Subject)) if ('курсовая'in Subject[j])]
+    all_praktik_time = [j for j in range(0, len(Subject)) if (Subject[j] == "Практика")]
+    gia = [j for j in range(0, len(Subject)) if ('аттестация' in Subject[j])]
+    dem_dip = [j for j in range(0, len(Subject)) if ('экзамен' in Subject[j])]
+
+    # Занесение предметов, практик и курсовых работ в столбцы заголовков
     for i in range(0, len(sub)):
         ws.cell(row=3, column=column_index_from_string('W') + i).value = sub[i]
 
@@ -181,7 +214,94 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
 
     ws['DN3'].value = name_kurs_job[0]
 
-    # toast('Сохраняю файл')
+    # Занесение данных о студентах в таблицу
+    mark = {
+        '+': "зачтено",
+        3: 'удолетворительно',
+        4: 'хорошо',
+        5: 'отлично',
+        'х': "x"
+    }
+
+    for i in range(0, len(data_student)):
+        ws.row_dimensions[i + 5].height = 50
+
+        ws.cell(row=i + 5, column=column_index_from_string('A')).value = data_student[i]['surname']
+        ws.cell(row=i + 5, column=column_index_from_string('B')).value = data_student[i]['name']
+        ws.cell(row=i + 5, column=column_index_from_string('C')).value = data_student[i]['patronymic']
+        ws.cell(row=i + 5, column=column_index_from_string('D')).value = data_student[i]['birthday']
+        ws.cell(row=i + 5, column=column_index_from_string('E')).value = data_student[i]['year_references']
+        ws.cell(row=i + 5, column=column_index_from_string('F')).value = data_student[i]['speciality_code']
+        ws.cell(row=i + 5, column=column_index_from_string('G')).value = data_student[i]['specialty']
+        ws.cell(row=i + 5, column=column_index_from_string('H')).value = data_student[i]['data_references']
+        ws.cell(row=i + 5, column=column_index_from_string('I')).value = data_student[i]['qualification']
+        ws.cell(row=i + 5, column=column_index_from_string('J')).value = data_student[i]['gender']
+        ws.cell(row=i + 5, column=column_index_from_string('K')).value = data_student[i]['SNILS']
+        ws.cell(row=i + 5, column=column_index_from_string('L')).value = data_student[i]['on_EPGU']
+        ws.cell(row=i + 5, column=column_index_from_string('M')).value = data_student[i]['citizenship']
+        ws.cell(row=i + 5, column=column_index_from_string('N')).value = data_student[i]['on_blank']
+        ws.cell(row=i + 5, column=column_index_from_string('O')).value = data_student[i]['base_references']
+        ws.cell(row=i + 5, column=column_index_from_string('P')).value = data_student[i]['basis_acceptance']
+        ws.cell(row=i + 5, column=column_index_from_string('Q')).value = data_student[i]['email']
+        ws.cell(row=i + 5, column=column_index_from_string('R')).value = data_student[i]['chair_gec']
+        ws.cell(row=i + 5, column=column_index_from_string('S')).value = data_student[i]['previous_document_education']
+        ws.cell(row=i + 5, column=column_index_from_string('T')).value = data_student[i]['document_view']
+        ws.cell(row=i + 5, column=column_index_from_string('U')).value = data_student[i]['solution_gec']
+        ws.cell(row=i + 5, column=column_index_from_string('V')).value = data_student[i]['term_accumulation']
+
+        ws.cell(row=i + 5, column=column_index_from_string('A')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('B')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('C')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('D')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('E')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('F')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('G')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('H')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('I')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('J')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('K')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('L')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('M')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('N')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('O')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('P')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('Q')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('R')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('S')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('T')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('U')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('V')).border = Border(top=double, bottom=double, left=thins, right=thins)
+
+        for j in range(0, len(sub_index)):
+            ws.cell(row=i + 5, column=column_index_from_string('W') + j).value = f"{sub_hour[j]} | {mark[data_student[i]['mark'][sub_index[j]]]}"
+            ws.cell(row=i + 5, column=column_index_from_string('W') + j).border = Border(top=double, bottom=double, left=thins, right=thins)
+
+        ws.cell(row=i + 5, column=column_index_from_string('CY')).value = f"{Subjetc_hour[all_praktik_time[0]]} | {mark[data_student[i]['mark'][all_praktik_time[0]]]}"
+        ws.cell(row=i + 5, column=column_index_from_string('CY')).border = Border(top=double, bottom=double, left=thins, right=thins)
+
+        for j in range(0, len(index_praktiks)):
+            ws.cell(row=i + 5, column=column_index_from_string('CZ') + j).value = f"{Subjetc_hour[index_praktiks[j]]} | {mark[data_student[i]['mark'][index_praktiks[j]]]}"
+            ws.cell(row=i + 5, column=column_index_from_string('CZ') + j).border = Border(top=double, bottom=double, left=thins, right=thins)
+
+        ws.cell(row=i + 5, column=column_index_from_string('DL')).value = f"{Subjetc_hour[gia[0]]} | {mark[data_student[i]['mark'][gia[0]]]}"
+        ws.cell(row=i + 5, column=column_index_from_string('DM')).value = f"{Subject[dem_dip[0]]} | {Subjetc_hour[dem_dip[0]]} | {mark[data_student[i]['mark'][dem_dip[0]]]}"
+        ws.cell(row=i + 5, column=column_index_from_string('DN')).value = f"{mark[data_student[i]['mark'][index_kurs_job[0]]]}"
+
+        ws.cell(row=i + 5, column=column_index_from_string('DL')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('DM')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('DN')).border = Border(top=double, bottom=double, left=thins, right=thins)
+
+        ws.cell(row=i + 5, column=column_index_from_string('DP')).value = "Форма обучения: очная"
+        ws.cell(row=i + 5, column=column_index_from_string('DP')).fill = PatternFill('solid', fgColor='b4c7e7')
+        ws.cell(row=i + 5, column=column_index_from_string('DO')).fill = PatternFill('solid', fgColor='b4c7e7')
+
+        ws.cell(row=i + 5, column=column_index_from_string('DP')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 5, column=column_index_from_string('DO')).border = Border(top=double, bottom=double, left=thins, right=thins)
+
+        ws.cell(row=i + 5, column=column_index_from_string('DQ')).value = data_student[i]['rektor']
+        ws.cell(row=i + 5, column=column_index_from_string('DQ')).border = Border(top=double, bottom=double, left=thins, right=thins)
+
+    toast('Сохраняю файл')
     path = os.path.join(f'C:\\Users\\{os.getlogin()}\\Documents\\Сведения студентов из ФРДО {spec}.xlsx')
     new_file.save(path)
     return path
