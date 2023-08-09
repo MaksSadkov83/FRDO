@@ -3,22 +3,18 @@ import os.path
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import PatternFill, Border, Side
 from openpyxl.utils.cell import get_column_letter, column_index_from_string
-from kivymd.toast import toast
 
 
 def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx", spec="Информационные системы и программирование"):
 
-    toast('Открываю файлы')
     wb_file1 = load_workbook(file1, read_only=True, data_only=True)
     wb_file2 = load_workbook(file2, read_only=True, data_only=True)
     ws_f1 = wb_file1.active
     ws_f2 = wb_file2.active
 
-    toast('Создаю новый файл')
     new_file = Workbook()
     ws = new_file.active
 
-    toast('Извлекаю данные')
     # Парсинг файла с оценками
     FIO = {}
     Subject = []
@@ -80,7 +76,6 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
             }
             data_student.append(student)
 
-    toast('Заношу в файл')
     # Высота строк
     ws.row_dimensions[1].height = 50
     ws.row_dimensions[2].height = 50
@@ -301,7 +296,6 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
         ws.cell(row=i + 5, column=column_index_from_string('DQ')).value = data_student[i]['rektor']
         ws.cell(row=i + 5, column=column_index_from_string('DQ')).border = Border(top=double, bottom=double, left=thins, right=thins)
 
-    toast('Сохраняю файл')
     path = os.path.join(f'C:\\Users\\{os.getlogin()}\\Documents\\Сведения студентов из ФРДО {spec}.xlsx')
     new_file.save(path)
     return path
