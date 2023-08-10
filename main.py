@@ -1,21 +1,15 @@
-import time
-
 from kivy.clock import Clock
 from kivy.config import Config
 from kivymd.uix.menu import MDDropdownMenu
-from kivy.properties import StringProperty, ObjectProperty
 
 Config.set("graphics", "resizable", 0)
 Config.set("graphics", "width", 760)
 Config.set("graphics", "height", 700)
 
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.label import Label
 from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.toast import toast
-from kivy.core.window import Window
 import os
 from parcer_xlsx import ParcerXlsxData
 from threading import Thread
