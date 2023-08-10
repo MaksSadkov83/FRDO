@@ -31,9 +31,9 @@ class FrdoStudent(MDApp):
         file_1 = self.root.ids.file1
         file_2 = self.root.ids.file2
         spec = self.root.ids.spec
-        file1 = list(file_1.split('\\'))
-        file2 = list(file_2.split('\\'))
-        if file_1 != "" and file_2 != "":
+        file1 = list(file_1.text.split('\\'))
+        file2 = list(file_2.text.split('\\'))
+        if file_1.text != "" and file_2.text != "":
             if '.xlsx' in file1[-1] and '.xlsx' in file2[-1]:
                 if spec != "":
                     self.root.transition.direction = 'left'
