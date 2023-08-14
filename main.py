@@ -1,3 +1,5 @@
+import os, sys
+os.environ["KIVY_NO_CONSOLELOG"] = "1"
 from kivy.clock import Clock
 from kivy.config import Config
 from kivymd.uix.menu import MDDropdownMenu
@@ -11,7 +13,6 @@ from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.toast import toast
 from kivy.resources import resource_add_path, resource_find
-import os, sys
 from parcer_xlsx import ParcerXlsxData
 from threading import Thread
 
