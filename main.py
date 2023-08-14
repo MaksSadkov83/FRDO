@@ -10,7 +10,8 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.toast import toast
-import os
+from kivy.resources import resource_add_path, resource_find
+import os, sys
 from parcer_xlsx import ParcerXlsxData
 from threading import Thread
 
@@ -133,4 +134,10 @@ class FrdoStudent(MDApp):
 
 
 if __name__ == "__main__":
-    FrdoStudent().run()
+    try:
+        if hasattr(sys, '_MEIPASS'):
+            resource_add_path(os.path.join(sys._MEIPASS))
+        FrdoStudent().run()
+    except Exception as e:
+        print(e)
+        print('Press enter...')
