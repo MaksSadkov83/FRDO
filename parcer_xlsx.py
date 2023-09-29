@@ -106,11 +106,11 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
     ws['DN1'].value = "Курсовые работы (проекты) [ Курсовые работы (проекты) | Оценка ]"
     ws['DO1'].value = "Дополнительные сведения [ Содержание дополнительных сведений ]"
     ws['DQ1'].value = "ПОДПИСИ"
-    ws['CY3'].value = "Практики"
-    ws['CY4'].value = "+в том числе:"
-    ws['DL3'].value = "Государственная итоговая аттестация"
-    ws['DL4'].value = "+в том числе:"
-    ws['DQ3'].value = "Ректор"
+    ws['CY2'].value = "Практики"
+    ws['CY3'].value = "+в том числе:"
+    ws['DL2'].value = "Государственная итоговая аттестация"
+    ws['DL3'].value = "+в том числе:"
+    ws['DQ2'].value = "Директор"
 
     # Назначение ширины столбцов
     for i in range(1, ws.max_column + 1):
@@ -123,8 +123,8 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
     INFO_3 = ws['W1']
     INFO_4 = ws['DO1:DP2']
     INFO_5 = ws['DQ1:DQ2']
-    INFO_6 = ws['CY3:DK4']
-    INFO_7 = ws['DL3:DN4']
+    INFO_6 = ws['CY2:DK3']
+    INFO_7 = ws['DL2:DN3']
     INFO_8 = ws['A3:DQ4']
 
     thins = Side(border_style="medium", color="211c16")
@@ -144,7 +144,7 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
     INFO_3.fill = PatternFill('solid', fgColor='ffe699')
     INFO_3.border = Border(top=double, bottom=double, left=thins, right=thins)
 
-    for row in ws['W2:DN2']:
+    for row in ws['W2:CX2']:
         for cell in row:
             cell.fill = PatternFill('solid', fgColor='ffe699')
             cell.border = Border(top=double, bottom=double, left=thins, right=thins)
@@ -205,7 +205,7 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
         ws.cell(row=3, column=column_index_from_string('W') + i).value = sub[i]
 
     for i in range(0, len(theme_praktik)):
-        ws.cell(row=4, column=column_index_from_string('CZ') + i).value = theme_praktik[i]
+        ws.cell(row=3, column=column_index_from_string('CZ') + i).value = theme_praktik[i]
 
     ws['DN3'].value = name_kurs_job[0]
 
