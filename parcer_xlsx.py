@@ -202,7 +202,7 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
 
     # Занесение предметов, практик и курсовых работ в столбцы заголовков
     for i in range(0, len(sub)):
-        ws.cell(row=3, column=column_index_from_string('W') + i).value = sub[i]
+        ws.cell(row=2, column=column_index_from_string('W') + i).value = sub[i]
 
     for i in range(0, len(theme_praktik)):
         ws.cell(row=3, column=column_index_from_string('CZ') + i).value = theme_praktik[i]
@@ -219,82 +219,82 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
     }
 
     for i in range(0, len(data_student)):
-        ws.row_dimensions[i + 5].height = 50
+        ws.row_dimensions[i + 4].height = 50
 
-        ws.cell(row=i + 5, column=column_index_from_string('A')).value = data_student[i]['surname']
-        ws.cell(row=i + 5, column=column_index_from_string('B')).value = data_student[i]['name']
-        ws.cell(row=i + 5, column=column_index_from_string('C')).value = data_student[i]['patronymic']
-        ws.cell(row=i + 5, column=column_index_from_string('D')).value = data_student[i]['birthday']
-        ws.cell(row=i + 5, column=column_index_from_string('E')).value = data_student[i]['year_references']
-        ws.cell(row=i + 5, column=column_index_from_string('F')).value = data_student[i]['speciality_code']
-        ws.cell(row=i + 5, column=column_index_from_string('G')).value = data_student[i]['specialty']
-        ws.cell(row=i + 5, column=column_index_from_string('H')).value = data_student[i]['data_references']
-        ws.cell(row=i + 5, column=column_index_from_string('I')).value = data_student[i]['qualification']
-        ws.cell(row=i + 5, column=column_index_from_string('J')).value = data_student[i]['gender']
-        ws.cell(row=i + 5, column=column_index_from_string('K')).value = data_student[i]['SNILS']
-        ws.cell(row=i + 5, column=column_index_from_string('L')).value = data_student[i]['on_EPGU']
-        ws.cell(row=i + 5, column=column_index_from_string('M')).value = data_student[i]['citizenship']
-        ws.cell(row=i + 5, column=column_index_from_string('N')).value = data_student[i]['on_blank']
-        ws.cell(row=i + 5, column=column_index_from_string('O')).value = data_student[i]['base_references']
-        ws.cell(row=i + 5, column=column_index_from_string('P')).value = data_student[i]['basis_acceptance']
-        ws.cell(row=i + 5, column=column_index_from_string('Q')).value = data_student[i]['email']
-        ws.cell(row=i + 5, column=column_index_from_string('R')).value = data_student[i]['chair_gec']
-        ws.cell(row=i + 5, column=column_index_from_string('S')).value = data_student[i]['previous_document_education']
-        ws.cell(row=i + 5, column=column_index_from_string('T')).value = data_student[i]['document_view']
-        ws.cell(row=i + 5, column=column_index_from_string('U')).value = data_student[i]['solution_gec']
-        ws.cell(row=i + 5, column=column_index_from_string('V')).value = data_student[i]['term_accumulation']
+        ws.cell(row=i + 4, column=column_index_from_string('A')).value = data_student[i]['surname']
+        ws.cell(row=i + 4, column=column_index_from_string('B')).value = data_student[i]['name']
+        ws.cell(row=i + 4, column=column_index_from_string('C')).value = data_student[i]['patronymic']
+        ws.cell(row=i + 4, column=column_index_from_string('D')).value = data_student[i]['birthday']
+        ws.cell(row=i + 4, column=column_index_from_string('E')).value = data_student[i]['year_references']
+        ws.cell(row=i + 4, column=column_index_from_string('F')).value = data_student[i]['speciality_code']
+        ws.cell(row=i + 4, column=column_index_from_string('G')).value = data_student[i]['specialty']
+        ws.cell(row=i + 4, column=column_index_from_string('H')).value = data_student[i]['data_references']
+        ws.cell(row=i + 4, column=column_index_from_string('I')).value = data_student[i]['qualification']
+        ws.cell(row=i + 4, column=column_index_from_string('J')).value = data_student[i]['gender']
+        ws.cell(row=i + 4, column=column_index_from_string('K')).value = data_student[i]['SNILS']
+        ws.cell(row=i + 4, column=column_index_from_string('L')).value = data_student[i]['on_EPGU']
+        ws.cell(row=i + 4, column=column_index_from_string('M')).value = data_student[i]['citizenship']
+        ws.cell(row=i + 4, column=column_index_from_string('N')).value = data_student[i]['on_blank']
+        ws.cell(row=i + 4, column=column_index_from_string('O')).value = data_student[i]['base_references']
+        ws.cell(row=i + 4, column=column_index_from_string('P')).value = data_student[i]['basis_acceptance']
+        ws.cell(row=i + 4, column=column_index_from_string('Q')).value = data_student[i]['email']
+        ws.cell(row=i + 4, column=column_index_from_string('R')).value = data_student[i]['chair_gec']
+        ws.cell(row=i + 4, column=column_index_from_string('S')).value = data_student[i]['previous_document_education']
+        ws.cell(row=i + 4, column=column_index_from_string('T')).value = data_student[i]['document_view']
+        ws.cell(row=i + 4, column=column_index_from_string('U')).value = data_student[i]['solution_gec']
+        ws.cell(row=i + 4, column=column_index_from_string('V')).value = data_student[i]['term_accumulation']
 
-        ws.cell(row=i + 5, column=column_index_from_string('A')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('B')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('C')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('D')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('E')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('F')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('G')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('H')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('I')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('J')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('K')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('L')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('M')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('N')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('O')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('P')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('Q')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('R')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('S')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('T')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('U')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('V')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('A')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('B')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('C')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('D')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('E')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('F')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('G')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('H')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('I')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('J')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('K')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('L')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('M')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('N')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('O')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('P')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('Q')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('R')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('S')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('T')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('U')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('V')).border = Border(top=double, bottom=double, left=thins, right=thins)
 
         for j in range(0, len(sub_index)):
-            ws.cell(row=i + 5, column=column_index_from_string('W') + j).value = f"{sub_hour[j]} | {mark[data_student[i]['mark'][sub_index[j]]]}"
-            ws.cell(row=i + 5, column=column_index_from_string('W') + j).border = Border(top=double, bottom=double, left=thins, right=thins)
+            ws.cell(row=i + 4, column=column_index_from_string('W') + j).value = f"{sub_hour[j]} | {mark[data_student[i]['mark'][sub_index[j]]]}"
+            ws.cell(row=i + 4, column=column_index_from_string('W') + j).border = Border(top=double, bottom=double, left=thins, right=thins)
 
-        ws.cell(row=i + 5, column=column_index_from_string('CY')).value = f"{Subjetc_hour[all_praktik_time[0]]} | {mark[data_student[i]['mark'][all_praktik_time[0]]]}"
-        ws.cell(row=i + 5, column=column_index_from_string('CY')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('CY')).value = f"{Subjetc_hour[all_praktik_time[0]]} | {mark[data_student[i]['mark'][all_praktik_time[0]]]}"
+        ws.cell(row=i + 4, column=column_index_from_string('CY')).border = Border(top=double, bottom=double, left=thins, right=thins)
 
         for j in range(0, len(index_praktiks)):
-            ws.cell(row=i + 5, column=column_index_from_string('CZ') + j).value = f"{Subjetc_hour[index_praktiks[j]]} | {mark[data_student[i]['mark'][index_praktiks[j]]]}"
-            ws.cell(row=i + 5, column=column_index_from_string('CZ') + j).border = Border(top=double, bottom=double, left=thins, right=thins)
+            ws.cell(row=i + 4, column=column_index_from_string('CZ') + j).value = f"{Subjetc_hour[index_praktiks[j]]} | {mark[data_student[i]['mark'][index_praktiks[j]]]}"
+            ws.cell(row=i + 4, column=column_index_from_string('CZ') + j).border = Border(top=double, bottom=double, left=thins, right=thins)
 
-        ws.cell(row=i + 5, column=column_index_from_string('DL')).value = f"{Subjetc_hour[gia[0]]} | {mark[data_student[i]['mark'][gia[0]]]}"
-        ws.cell(row=i + 5, column=column_index_from_string('DM')).value = f"{Subject[dem_dip[0]]} | {Subjetc_hour[dem_dip[0]]} | {mark[data_student[i]['mark'][dem_dip[0]]]}"
-        ws.cell(row=i + 5, column=column_index_from_string('DN')).value = f"{mark[data_student[i]['mark'][index_kurs_job[0]]]}"
+        ws.cell(row=i + 4, column=column_index_from_string('DL')).value = f"{Subjetc_hour[gia[0]]} | {mark[data_student[i]['mark'][gia[0]]]}"
+        ws.cell(row=i + 4, column=column_index_from_string('DM')).value = f"{Subject[dem_dip[0]]} | {Subjetc_hour[dem_dip[0]]} | {mark[data_student[i]['mark'][dem_dip[0]]]}"
+        ws.cell(row=i + 4, column=column_index_from_string('DN')).value = f"{mark[data_student[i]['mark'][index_kurs_job[0]]]}"
 
-        ws.cell(row=i + 5, column=column_index_from_string('DL')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('DM')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('DN')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('DL')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('DM')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('DN')).border = Border(top=double, bottom=double, left=thins, right=thins)
 
-        ws.cell(row=i + 5, column=column_index_from_string('DP')).value = "Форма обучения: очная"
-        ws.cell(row=i + 5, column=column_index_from_string('DP')).fill = PatternFill('solid', fgColor='b4c7e7')
-        ws.cell(row=i + 5, column=column_index_from_string('DO')).fill = PatternFill('solid', fgColor='b4c7e7')
+        ws.cell(row=i + 4, column=column_index_from_string('DP')).value = "Форма обучения: очная"
+        ws.cell(row=i + 4, column=column_index_from_string('DP')).fill = PatternFill('solid', fgColor='b4c7e7')
+        ws.cell(row=i + 4, column=column_index_from_string('DO')).fill = PatternFill('solid', fgColor='b4c7e7')
 
-        ws.cell(row=i + 5, column=column_index_from_string('DP')).border = Border(top=double, bottom=double, left=thins, right=thins)
-        ws.cell(row=i + 5, column=column_index_from_string('DO')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('DP')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('DO')).border = Border(top=double, bottom=double, left=thins, right=thins)
 
-        ws.cell(row=i + 5, column=column_index_from_string('DQ')).value = data_student[i]['rektor']
-        ws.cell(row=i + 5, column=column_index_from_string('DQ')).border = Border(top=double, bottom=double, left=thins, right=thins)
+        ws.cell(row=i + 4, column=column_index_from_string('DQ')).value = data_student[i]['rektor']
+        ws.cell(row=i + 4, column=column_index_from_string('DQ')).border = Border(top=double, bottom=double, left=thins, right=thins)
 
     path = os.path.join(f'C:\\Users\\{os.getlogin()}\\Documents\\Сведения студентов из ФРДО {spec}.xlsx')
     new_file.save(path)
