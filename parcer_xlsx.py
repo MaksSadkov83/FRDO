@@ -200,6 +200,9 @@ def ParcerXlsxData(file1="Docs/--2023 (6).xlsx", file2="Docs/Оценки.xlsx",
     gia = [j for j in range(0, len(Subject)) if ('аттестация' in Subject[j])]
     dem_dip = [j for j in range(0, len(Subject)) if ('экзамен' in Subject[j])]
 
+    if len(dem_dip) == 0:
+        dem_dip.append(0)
+
     # Занесение предметов, практик и курсовых работ в столбцы заголовков
     for i in range(0, len(sub)):
         ws.cell(row=2, column=column_index_from_string('W') + i).value = sub[i]
